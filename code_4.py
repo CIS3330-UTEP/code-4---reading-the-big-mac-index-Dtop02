@@ -22,7 +22,7 @@ def get_the_cheapest_big_mac_price_by_year(year):
     country_name = chep_row['name']
     country_code = chep_row['iso_a3']
     dol_pr = chep_row['dollar_price']
-    return f"{country_name}({country_code}): ${dol_pr:.1f}"
+    return f"{country_name}({country_code}): ${dol_pr:.2f}"
 
 
 def get_the_most_expensive_big_mac_price_by_year(year):
@@ -32,7 +32,7 @@ def get_the_most_expensive_big_mac_price_by_year(year):
     country_name = expen_row['name']
     country_code = expen_row['iso_a3']
     dol_pr = expen_row['dollar_price']
-    return f"{country_name}({country_code}): ${dol_pr:.1f}"
+    return f"{country_name}({country_code}): ${dol_pr:.2f}"
 
 
 
