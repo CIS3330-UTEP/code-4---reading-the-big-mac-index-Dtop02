@@ -2,37 +2,41 @@ import pandas as pd
 
 def get_big_mac_price_by_year(year, country_code):
     df = pd.read_csv('big-mac-full-index.csv')
-    fil_d = df[(df['iso_a3'].str.lower() == country_code.lower()) & (df['date'].str.startswith(str(year)))]
-    rounded_price = round(fil_d['dollar_price'].mean(), 2)
-    return rounded_price
-
+    query_text = f"iso_a3.str.lower() == '{country_code.lower()}' and date.str.startswith('{year}')"
+    count_d = df.query(query_text)
+    round_p = round(count_d['dollar_price'].mean(), 2)
+    return round_p
 
 def get_big_mac_price_by_country(country_code):
     df = pd.read_csv('big-mac-full-index.csv')
-    fil_d = df[df['iso_a3'].str.lower() == country_code.lower()]
-    mp = fil_d['dollar_price'].mean()
-    rounded_price = round(mp, 2)
-    return rounded_price
+    query_text = f"iso_a3.str.lower() == '{country_code.lower()}'"
+    country_p = df.query(query_text)
+    mp = country_p['dollar_price'].mean()
+    round_p = round(mp, 2)
+    return round_p
 
 
 def get_the_cheapest_big_mac_price_by_year(year):
     df = pd.read_csv('big-mac-full-index.csv')
-    fil_d = df[df['date'].str.startswith(str(year))]
-    chep_row = fil_d.loc[fil_d['dollar_price'].idxmin()]
-    country_name = chep_row['name']
-    country_code = chep_row['iso_a3']
-    dol_pr = chep_row['dollar_price']
-    return f"{country_name}({country_code}): ${dol_pr:.2f}"
+    query_string = f"date.str.startswith('{year}')"
+    bmby = df.query(query_string)
+    cheapest_row = bmby.loc[bmby['dollar_price'].idxmin()]
+    cntr_n = cheapest_row['name']
+    cntr_c = cheapest_row['iso_a3']
+    dollar_price = cheapest_row['dollar_price']
+    return f"{cntr_n}({cntr_c}): ${dollar_price:.2f}"
 
 
 def get_the_most_expensive_big_mac_price_by_year(year):
     df = pd.read_csv('big-mac-full-index.csv')
-    fil_d = df[df['date'].str.startswith(str(year))]
-    expen_row = fil_d.loc[fil_d['dollar_price'].idxmax()]
-    country_name = expen_row['name']
-    country_code = expen_row['iso_a3']
-    dol_pr = expen_row['dollar_price']
-    return f"{country_name}({country_code}): ${dol_pr:.2f}"
+    query_text = f"date.str.startswith('{year}')"
+    ebmpy = df.query(query_text)
+    expen_r = ebmpy.loc[ebmpy['dollar_price'].idxmax()]
+    cntr_n = expen_r['name']
+    cntr_c = expen_r['iso_a3']
+    dol_p = expen_r['dollar_price']
+    return f"{cntr_n}({cntr_c}): ${dol_p:.2f}"
+
 
 
 
